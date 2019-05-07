@@ -1,4 +1,5 @@
 import random
+import re
 
 responses = {
     "AoA": [
@@ -14,7 +15,8 @@ responses = {
         "Naa cheez ko Allah Deta kehty hn",
         "A girl has no name"
     ],
-    "Ziada shaloo paloo hony ka zrort nai ha": "he he. mazak tha.."
+    "Ziada shaloo paloo hony ka zrort nai ha": "he he. mazak tha..",
+    "Ap ne khana khaya": "Ap khana nai khata"
 }
 
 wrongQueries = [
@@ -24,9 +26,18 @@ wrongQueries = [
 ]
 
 
+def swap_pronouns(phrase):
+    if 'Ap' in phrase:
+        return re.sub('Ap', 'Ma', phrase)
+
+    return phrase
+
+
 def respond(message):
     if message in responses:
-        return random.choice(responses[message])
+        res = random.choice(responses[message])
+        swp = swap_pronouns(res)
+        return swp
     else:
         return random.choice(wrongQueries)
 
